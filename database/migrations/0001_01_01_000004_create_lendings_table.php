@@ -29,6 +29,7 @@ return new class extends Migration
             $table->date('returned_at')->nullable();
 
             $table->string('status', 20)->default('PENDING');
+            $table->double('penalty')->default(0);
 
             $table->timestamps();
 
