@@ -7,6 +7,7 @@ use App\Models\Member;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class MemberController extends Controller
 {
@@ -22,6 +23,7 @@ class MemberController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
+            'user_id' => ['required', 'integer', 'unique:members,user_id'],
             'member_number' => [
                 'required',
                 'string',
@@ -58,15 +60,7 @@ class MemberController extends Controller
                 'required',
                 'email',
                 'max:255',
-                \Illuminate\Validation\Rule::unique(
-                    'members',
-                    'email'
-                )->ignore($member->id),
-            ],
-            'status' => [
-                'sometimes',
-                'required',
-                'in:ACTIVE,INACTIVE',
+                Rule::unique('members', 'email')->ignore($member->id),
             ],
         ]);
 

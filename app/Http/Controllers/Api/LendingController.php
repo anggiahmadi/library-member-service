@@ -45,6 +45,11 @@ class LendingController extends Controller
                 'integer',
                 'min:1',
             ],
+            'due_at' => [
+                'required',
+                'date_format:Y-m-d',
+                'after_or_equal:today',
+            ],
         ]);
 
         $member = Member::findOrFail($validated['member_id']);
@@ -74,7 +79,7 @@ class LendingController extends Controller
             'book_copy_id' => $validated['book_copy_id'],
             'reservation_reference' => (string) Str::uuid(),
             'borrowed_at' => now()->toDateString(),
-            'due_at' => now()->addDays(7)->toDateString(),
+            'due_at' => $validated['due_at'],
             'status' => Lending::PENDING,
         ]);
 

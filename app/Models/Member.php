@@ -11,6 +11,7 @@ class Member extends Model
     public const INACTIVE = 'INACTIVE';
 
     protected $fillable = [
+        'user_id',
         'member_number',
         'name',
         'email',
